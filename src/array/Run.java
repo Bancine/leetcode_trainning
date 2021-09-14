@@ -1,4 +1,4 @@
-package 数组;
+package array;
 
 public class Run {
     public static void main(String[] args) {

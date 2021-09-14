@@ -1,12 +1,31 @@
-package 数组;
+package array;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class Solution {
     /**
+     * https://leetcode-cn.com/problems/maximum-subarray/solution/
+     * 53.最大子序和
+     * #数组 #分治 #动态规划
+     * @param nums 一个数组
+     * @return 最大和
+     */
+    public int maxSubArray(int[] nums) {
+        int pre = 0;
+        int res = nums[0];
+        for (int num: nums) {
+            //如果加了还不如不加的话就重新开始加
+            pre = Math.max(pre + num, num);
+            res = Math.max(res,pre);
+        }
+        return res;
+    }
+
+    /**
      * 原题目：https://leetcode-cn.com/problems/spiral-matrix/
      * 54.螺旋矩阵
+     * #数组 #矩阵 #模拟
      * @param matrix 矩阵
      * @return 顺时针列表
      */
