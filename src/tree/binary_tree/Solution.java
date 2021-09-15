@@ -6,18 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
-    /**
-     * 题目：https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/
-     * 124. 二叉树中的最大路径和
-     * #树 #深度优先搜索 #动态规划 #二叉树
-     * @param root 根节点
-     * @return 最大路径和
-     */
-    public int maxPathSum(TreeNode root) {
-        int res = 0;
 
-        return res;
-    }
 
     /**
      * https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
@@ -41,4 +30,28 @@ public class Solution {
         res.add(root.val);
         inoder(root.right,res);
     }
+
+    /**
+     * 题目：https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/
+     * 124. 二叉树中的最大路径和
+     * #树 #深度优先搜索 #动态规划 #二叉树
+     * @param root 根节点
+     * @return 最大路径和
+     */
+    int max_global = 0;
+    public int maxPathSum(TreeNode root) {
+        max_global = root.val;
+        maxGin(root);
+        return max_global;
+    }
+
+    private int maxGin(TreeNode root) {
+        if (root==null) return 0;
+        int leftMax = Math.max(maxGin(root.left),0);
+        int rightMax = Math.max(maxGin(root.right),0);
+        int maxpath = Math.max(  leftMax+ root.val, rightMax+root.val);
+        max_global = Math.max(leftMax + rightMax + root.val,max_global);
+        return maxpath;
+    }
+
 }
