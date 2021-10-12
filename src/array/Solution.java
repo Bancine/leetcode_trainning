@@ -1,7 +1,6 @@
 package array;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
     /**
@@ -55,7 +54,25 @@ class Solution {
         return res;
     }
 
+    /**
+     * 原题目：https://leetcode-cn.com/problems/single-number/
+     * 136. 只出现一次的数字
+     * #数组 #位运算
+     * @param
+     * @return
+     */
+    public int singleNumber(int[] nums) {
+        int a = 0;
+        for (int num:nums){
+            a = a ^ num;
+        }
+        return a;
+    }
 
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        solution.singleNumber(new int[]{1,1,2});
+    }
 
 
 }
