@@ -69,10 +69,54 @@ class Solution {
         return a;
     }
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        solution.singleNumber(new int[]{1,1,2});
+    public float calculate(char[] chars){
+        Stack<Character> calStack = new Stack<>();
+        Stack<Float> numStack = new Stack<>();
+        for (char tempChar:chars){
+            if (tempChar=='+' || tempChar =='-' || tempChar == '*' || tempChar=='/'){
+                calStack.push(tempChar);
+            }else {
+                numStack.push(Float.parseFloat(String.valueOf(tempChar)));
+                if (numStack.size()>1 && (calStack.peek()=='*' || calStack.peek()=='/')){
+                    float a = numStack.pop();
+                    float b = numStack.pop();
+                    numStack.push(calStack.pop()=='*'?a*b:b/a);
+                }
+            }
+        }
+
+        while (!calStack.empty()){
+            float a = numStack.pop();
+            float b = numStack.pop();
+            numStack.push(calStack.pop()=='+'?a+b:b-a);
+        }
+        System.out.println(numStack.peek());
+        return numStack.pop();
     }
+
+    public static void main(String[] args) {
+
+        Solution solution = new Solution();
+        System.out.println("aaaaa");
+//        solution.singleNumber(new int[]{1,1,2});
+        char[] chars = {'4','+','5','*','7','/','2','-','1'};
+        solution.calculate(chars);
+    }
+
+    public int maxProfit(int[] prices){
+        int tempMax = Integer.MAX_VALUE;
+        int[][] dp = new int[prices.length][3];
+        dp[0][0] = -prices[0]; //持有股票
+        dp[0][1] = 0;// 持有并冻结
+        dp[0][2] = 0;// 持有不冻结
+        for (int i = 1;i<prices.length;i++){
+            dp[i][0] = Math.max(dp[i-1][0],-prices[i]);
+            dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0]+prices[i]);
+            dp[i][2] = dp[i-1][1];
+        }
+        return -1;
+    }
+
 
 
 }

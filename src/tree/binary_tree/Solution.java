@@ -38,20 +38,40 @@ public class Solution {
      * @param root 根节点
      * @return 最大路径和
      */
-    int max_global = 0;
-    public int maxPathSum(TreeNode root) {
-        max_global = root.val;
-        maxGin(root);
-        return max_global;
+//    int max_global = 0;
+//    public int maxPathSum(TreeNode root) {
+//        max_global = root.val;
+//        maxGin(root);
+//        return max_global;
+//    }
+//
+//    private int maxGin(TreeNode root) {
+//        if (root==null) return 0;
+//        int leftMax = Math.max(maxGin(root.left),0);
+//        int rightMax = Math.max(maxGin(root.right),0);
+//        int maxpath = Math.max(  leftMax+ root.val, rightMax+root.val);
+//        max_global = Math.max(leftMax + rightMax + root.val,max_global);
+//        return maxpath;
+//    }
+     int max_global = Integer.MIN_VALUE;
+     public int maxPathSum(TreeNode root) {
+         maxGin(root);
+         return max_global;
+     }
+
+     private int maxGin(TreeNode root) {
+         if(root == null) return 0;
+         int leftMax = Math.max(maxGin(root.left),0);
+         int rightMax = Math.max(maxGin(root.right),0);
+         max_global = Math.max(max_global,root.val+rightMax+leftMax);
+         return Math.max(leftMax,rightMax)+root.val;
+     }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1,new TreeNode(2,null,null),new TreeNode(3,null,null));
+        Solution solution = new Solution();
+        System.out.println(solution.maxPathSum(root));
     }
 
-    private int maxGin(TreeNode root) {
-        if (root==null) return 0;
-        int leftMax = Math.max(maxGin(root.left),0);
-        int rightMax = Math.max(maxGin(root.right),0);
-        int maxpath = Math.max(  leftMax+ root.val, rightMax+root.val);
-        max_global = Math.max(leftMax + rightMax + root.val,max_global);
-        return maxpath;
-    }
 
 }
