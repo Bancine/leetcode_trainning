@@ -3,7 +3,9 @@ package tree.binary_tree;
 import tree.TreeNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.OptionalInt;
 
 public class Solution {
 
@@ -67,10 +69,41 @@ public class Solution {
          return Math.max(leftMax,rightMax)+root.val;
      }
 
+    /**
+     * 题目：https://leetcode-cn.com/problems/maximum-binary-tree/
+     * 654. 最大二叉树
+     * #树 #栈 #动态规划 #二叉树 # 数组 #分治
+     * @param nums
+     * @return 最大数
+     */
+        public TreeNode constructMaximumBinaryTree(int[] nums) {
+            int maxNum = Integer.MIN_VALUE;
+            int idx = 0;
+            for (int i = 0; i < nums.length; i++) {
+                maxNum = Math.max(nums[i], maxNum);
+                if (nums[i] == maxNum) {
+                    idx = i;
+                }
+            }
+
+            if (nums.length != 0) {
+                TreeNode treeNode = new TreeNode();
+                treeNode.val = maxNum;
+                treeNode.left = constructMaximumBinaryTree(Arrays.copyOfRange(nums, 0, idx));
+                treeNode.right = constructMaximumBinaryTree(Arrays.copyOfRange(nums, idx+1, nums.length));
+                return treeNode;
+            }else {
+                return null;
+            }
+        }
+
+
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(1,new TreeNode(2,null,null),new TreeNode(3,null,null));
+//        TreeNode root = new TreeNode(1,new TreeNode(2,null,null),new TreeNode(3,null,null));
         Solution solution = new Solution();
-        System.out.println(solution.maxPathSum(root));
+//        System.out.println(solution.maxPathSum(root));
+        TreeNode treeNode = solution.constructMaximumBinaryTree(new int[]{3, 2, 1, 6, 0, 5});
+        System.out.println(treeNode.toString());
     }
 
 
